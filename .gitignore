@@ -3,6 +3,7 @@
 !.zshrc
 !.bashrc
 !.gitignore
+!.tmux.conf
 
 !.config/
 !.config/nvim/
