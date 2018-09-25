@@ -5,6 +5,7 @@ Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'whatyouhide/vim-lengthmatters'
 call plug#end()
 
 filetype plugin indent on
@@ -75,3 +76,7 @@ nnoremap <Leader>a :Ack!<Space>
 " vim-better-whitespace
 let g:better_whitespace_enabled = 1
 let g:strip_whitespace_on_save = 1
+
+" vim-lengthmatters
+let g:lengthmatters_on_by_default = 0
+nmap <leader>0 :LengthmattersToggle<CR>
