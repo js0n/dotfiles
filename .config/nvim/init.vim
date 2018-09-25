@@ -4,6 +4,7 @@ call plug#begin()
 Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'ntpeters/vim-better-whitespace'
 call plug#end()
 
 filetype plugin indent on
@@ -70,3 +71,7 @@ let g:ctrlp_map = '<leader>o'
 
 " Ack.vim
 nnoremap <Leader>a :Ack!<Space>
+
+" vim-better-whitespace
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save = 1
