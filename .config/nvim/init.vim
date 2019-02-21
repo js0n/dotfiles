@@ -4,6 +4,7 @@ call plug#begin()
 Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'whatyouhide/vim-lengthmatters'
 call plug#end()
