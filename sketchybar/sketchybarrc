@@ -103,7 +103,16 @@ sketchybar --add item wifi right \
                       script="$PLUGIN_DIR/wifi.sh" \
            --subscribe wifi wifi_change system_woke
 
-# Network download/upload rate, stacked (left of wifi)
+sketchybar --add item battery right \
+           --set battery update_freq=120 \
+                         script="$PLUGIN_DIR/battery.sh" \
+           --subscribe battery system_woke power_source_change
+
+sketchybar --add item volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" \
+           --subscribe volume volume_change
+
+# Network download/upload rate, stacked (next to the system stats)
 sketchybar --add item net.rx right \
            --set net.rx width=0 \
                         y_offset=6 \
@@ -130,15 +139,6 @@ sketchybar --add item net.rx right \
                         label.width=68 \
                         label.align=right \
            --subscribe net.rx system_woke
-
-sketchybar --add item battery right \
-           --set battery update_freq=120 \
-                         script="$PLUGIN_DIR/battery.sh" \
-           --subscribe battery system_woke power_source_change
-
-sketchybar --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-           --subscribe volume volume_change
 
 # CPU/GPU die temps, stacked
 sketchybar --add item temp.cpu right \
