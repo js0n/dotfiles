@@ -218,3 +218,8 @@ gaps.outer.right =      6
     alt-shift-j = ['join-with down', 'mode main']
     alt-shift-k = ['join-with up', 'mode main']
     alt-shift-l = ['join-with right', 'mode main']
+
+# Dia's custom window chrome makes AeroSpace mistake it for a dialog and float it
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.dia'
+run = 'layout tiling'
