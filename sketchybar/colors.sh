@@ -10,7 +10,7 @@ export TRANSPARENT=0x00000000
 export TEXT=0xff343b58     # light fg: primary text and icons
 export SUBTEXT=0xff6172b0  # day fg_dark: secondary text, dates, extra clocks, disk tag
 export MUTED=0xff9699a3    # light comment: inactive state, wifi off or disconnected
-export HIGHLIGHT=0xff2e7de9  # day blue: focused workspace number and underline
+export HIGHLIGHT=0xff2e7de9  # day blue: focused workspace number
 
 export ACCENT_CPU=0xffb15c00  # day orange
 export ACCENT_GPU=0xff2e7de9  # day blue

@@ -44,10 +44,6 @@ for label in $(aerospace list-workspaces --all | sed 's/^10$/0/' | sort -V); do
                                 icon.padding_right=0 \
                                 padding_left=2 \
                                 padding_right=2 \
-                                background.color=$HIGHLIGHT \
-                                background.corner_radius=1 \
-                                background.height=2 \
-                                background.y_offset=-10 \
                                 background.drawing=off \
                                 click_script="aerospace workspace $sid" \
                                 script="$PLUGIN_DIR/aerospace.sh $sid"

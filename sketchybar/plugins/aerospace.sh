@@ -8,10 +8,10 @@ source "$CONFIG_DIR/colors.sh"
 FOCUSED_WORKSPACE="${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}"
 
 if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-	# Focused: blue number with a thin blue underline
+	# Focused: blue number
 	sketchybar --animate tanh 12 \
 	           --set "$NAME" drawing=on \
-	                         background.drawing=on \
+	                         background.drawing=off \
 	                         label.color=$HIGHLIGHT
 elif aerospace list-workspaces --monitor all --empty no | grep -qx "$1"; then
 	# Occupied: plain dark number, no fill
