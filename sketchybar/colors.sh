@@ -1,21 +1,22 @@
 #!/bin/bash
 
-# One palette for the whole bar (0xAARRGGBB), taken from Nord
-# (https://www.nordtheme.com) so the bar, window borders, and terminal share
-# a scheme. The bar is clear, so text uses Nord's dark Polar Night tones.
+# One palette for the whole bar (0xAARRGGBB), taken from Tokyo Night
+# (https://github.com/folke/tokyonight.nvim) so the bar, window borders, and
+# terminal share a scheme. The bar is clear, so text uses the dark tones from
+# the light variants (Tokyo Night Light/Day).
 
 export TRANSPARENT=0x00000000
 
-export TEXT=0xff2e3440     # nord0: primary text and icons
-export SUBTEXT=0xff4c566a  # nord3: secondary text: dates, extra clocks, disk tag
-export MUTED=0xff616e88    # nord3 bright: inactive state, wifi off or disconnected
-export SURFACE=0xffd8dee9  # nord4: focused workspace cell
+export TEXT=0xff343b58     # light fg: primary text and icons
+export SUBTEXT=0xff6172b0  # day fg_dark: secondary text, dates, extra clocks, disk tag
+export MUTED=0xff9699a3    # light comment: inactive state, wifi off or disconnected
+export SURFACE=0xffc4c8da  # day bg_highlight: focused workspace cell
 
-export ACCENT_CPU=0xffd08770  # nord12 orange
-export ACCENT_GPU=0xff5e81ac  # nord10 blue
-export ACCENT_RAM=0xffa3be8c  # nord14 green
+export ACCENT_CPU=0xffb15c00  # day orange
+export ACCENT_GPU=0xff2e7de9  # day blue
+export ACCENT_RAM=0xff587539  # day green
 
 # Graph fills: the accents at low alpha
-export FILL_CPU=0x30d08770
-export FILL_GPU=0x205e81ac
-export FILL_RAM=0x30a3be8c
+export FILL_CPU=0x30b15c00
+export FILL_GPU=0x202e7de9
+export FILL_RAM=0x30587539
