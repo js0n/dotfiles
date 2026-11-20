@@ -8,3 +8,8 @@
 !.config/
 !.config/nvim/
 !.config/nvim/init.vim
+
+!.config/sketchybar/
+!.config/sketchybar/sketchybarrc
+!.config/sketchybar/plugins/
+!.config/sketchybar/plugins/*.sh
