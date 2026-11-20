@@ -17,9 +17,11 @@ if [ -n "$SAMPLE" ]; then
       (.gpu_usage[1] * 100),
       .temp.cpu_temp_avg,
       .temp.gpu_temp_avg,
-      ((.memory.ram_total - .memory.ram_usage) / 1048576),
+      ((.memory.ram_total - .memory.ram_usage) / 1073741824 * 10),
       (.memory.ram_usage / .memory.ram_total * 100)
     ] | map(round) | join(" ")')"
+  # Rounded to tenths of a GiB above; render as one decimal
+  MEM_AVAIL=$(awk -v v="$MEM_AVAIL" 'BEGIN {printf "%.1f", v/10}')
 else
   # Fallback if macmon is unavailable: CPU + RAM only, no GPU or temps
   CPU=$(ps -A -o %cpu | awk -v n="$((E_CORES + P_CORES))" '{s+=$1} END {printf "%d", s/n}')
@@ -29,7 +31,7 @@ else
   MEM_AVAIL=$(vm_stat | awk -v ps="$(sysctl -n hw.pagesize)" '
     /Pages free/ {f=$NF+0}
     /Pages inactive/ {i=$NF+0}
-    END {printf "%d", (f+i)*ps/1048576}')
+    END {printf "%.1f", (f+i)*ps/1073741824}')
   MEM_PCT=$(vm_stat | awk -v ps="$(sysctl -n hw.pagesize)" -v total="$(sysctl -n hw.memsize)" '
     /Pages active/ {a=$NF+0}
     /Pages wired down/ {w=$NF+0}
@@ -47,4 +49,4 @@ sketchybar --push cpu.graph "$(awk -v v="$CPU" 'BEGIN {print v/100}')" \
            --set stats.gpu label="${GPU}%" \
            --set temp.cpu label="${CPU_TEMP}°" \
            --set temp.gpu label="${GPU_TEMP}°" \
-           --set mem.avail label="${MEM_AVAIL}M"
+           --set mem.avail label="${MEM_AVAIL}G"
