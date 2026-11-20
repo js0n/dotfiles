@@ -34,6 +34,17 @@ rate() {
   }'
 }
 
+# Graph height: log scale from 1 Kb/s (0) to 1 Gb/s (1)
+level() {
+  awk -v b="$1" -v s="$2" 'BEGIN {
+    v = b * 8 / s; if (v < 1000) { print 0; exit }
+    l = (log(v) / log(10) - 3) / 6; if (l > 1) l = 1; print l
+  }'
+}
+
 ELAPSED=$((NOW - P_TIME))
-sketchybar --set net.rx label="$(rate $((RX - P_RX)) $ELAPSED)" \
-           --set net.tx label="$(rate $((TX - P_TX)) $ELAPSED)"
+D_RX=$((RX - P_RX)); D_TX=$((TX - P_TX))
+sketchybar --set net.rx label="$(rate $D_RX $ELAPSED)" \
+           --set net.tx label="$(rate $D_TX $ELAPSED)" \
+           --push net.rx.graph "$(level $D_RX $ELAPSED)" \
+           --push net.tx.graph "$(level $D_TX $ELAPSED)"

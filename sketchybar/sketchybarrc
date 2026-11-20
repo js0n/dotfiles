@@ -120,7 +120,7 @@ sketchybar --add item net.rx right \
                         script="$PLUGIN_DIR/net.sh" \
                         icon=DN \
                         icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
-                        icon.color=$ACCENT_NET \
+                        icon.color=$ACCENT_RX \
                         icon.width=28 \
                         icon.align=left \
                         icon.padding_right=0 \
@@ -131,7 +131,7 @@ sketchybar --add item net.rx right \
            --set net.tx y_offset=-6 \
                         icon=UP \
                         icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
-                        icon.color=$ACCENT_NET \
+                        icon.color=$ACCENT_TX \
                         icon.width=28 \
                         icon.align=left \
                         icon.padding_right=0 \
@@ -139,6 +139,25 @@ sketchybar --add item net.rx right \
                         label.width=50 \
                         label.align=right \
            --subscribe net.rx system_woke
+
+# Download (cyan) + upload (yellow) on one 40pt log-scale graph (1 Kb/s .. 1 Gb/s,
+# ~80s history); pushed by net.sh
+sketchybar --add graph net.rx.graph right 40 \
+           --set net.rx.graph graph.color=$ACCENT_RX \
+                              graph.fill_color=$FILL_RX \
+                              graph.line_width=1.5 \
+                              icon.drawing=off \
+                              label.drawing=off \
+                              padding_left=0 \
+                              padding_right=0 \
+           --add graph net.tx.graph right 40 \
+           --set net.tx.graph graph.color=$ACCENT_TX \
+                              graph.fill_color=$FILL_TX \
+                              graph.line_width=1.5 \
+                              icon.drawing=off \
+                              label.drawing=off \
+                              padding_left=0 \
+                              padding_right=-40
 
 # CPU/GPU die temps, stacked
 sketchybar --add item temp.cpu right \
