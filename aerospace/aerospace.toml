@@ -113,6 +113,9 @@ gaps.outer.right =      6
     alt-slash = 'layout tiles horizontal vertical'
     alt-comma = 'layout accordion horizontal vertical'
 
+    # One-step float/tile toggle (service-mode f is easy to mistype as alt-shift-f)
+    alt-shift-space = 'layout floating tiling'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#focus
     alt-h = 'focus left'
     alt-j = 'focus down'
