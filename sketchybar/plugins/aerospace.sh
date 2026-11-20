@@ -6,7 +6,7 @@
 FOCUSED_WORKSPACE="${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}"
 
 if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-	# Focused: lavender cell, light text
+	# Focused: slate cell, light text
 	sketchybar --animate tanh 12 \
 	           --set "$NAME" drawing=on \
 	                         background.drawing=on \
