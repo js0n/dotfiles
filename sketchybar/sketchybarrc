@@ -13,9 +13,9 @@ sketchybar --bar position=top \
                  color=$TRANSPARENT
 
 ##### Item Defaults #####
-sketchybar --default icon.font="Hack Nerd Font:Bold:14.0" \
+sketchybar --default icon.font="JetBrainsMono Nerd Font:Bold:14.0" \
                      icon.color=$TEXT \
-                     label.font="Hack Nerd Font:Regular:13.0" \
+                     label.font="JetBrainsMono Nerd Font:Regular:13.0" \
                      label.color=$TEXT \
                      padding_left=6 \
                      padding_right=6 \
@@ -35,7 +35,7 @@ for label in $(aerospace list-workspaces --all | sed 's/^10$/0/' | sort -V); do
     sketchybar --add item space.$sid left \
                --subscribe space.$sid aerospace_workspace_change \
                --set space.$sid label="$label" \
-                                label.font="Hack Nerd Font:Bold:12.0" \
+                                label.font="JetBrainsMono Nerd Font:Bold:12.0" \
                                 label.width=22 \
                                 label.align=center \
                                 label.padding_left=0 \
@@ -53,7 +53,7 @@ done
 sketchybar --add item front_app left \
            --set front_app icon.drawing=off \
                            padding_left=10 \
-                           label.font="Hack Nerd Font:Bold:12.0" \
+                           label.font="JetBrainsMono Nerd Font:Bold:12.0" \
                            label.color=$TEXT \
                            script="$PLUGIN_DIR/front_app.sh" \
            --subscribe front_app front_app_switched
@@ -68,7 +68,7 @@ sketchybar --add item clock.date right \
            --set clock.date width=0 \
                             y_offset=6 \
                             icon.drawing=off \
-                            label.font="Hack Nerd Font:Regular:10.0" \
+                            label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                             label.color=$SUBTEXT \
                             label.width=100 \
                             label.align=right \
@@ -77,7 +77,7 @@ sketchybar --add item clock.date right \
            --add item clock.time right \
            --set clock.time y_offset=-6 \
                             icon.drawing=off \
-                            label.font="Hack Nerd Font:Regular:10.0" \
+                            label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                             label.width=100 \
                             label.align=right \
            --subscribe clock.date system_woke
@@ -87,14 +87,14 @@ sketchybar --add item clock.utc right \
            --set clock.utc width=0 \
                            y_offset=6 \
                            icon.drawing=off \
-                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                            label.color=$SUBTEXT \
                            update_freq=10 \
                            script="$PLUGIN_DIR/clock_zones.sh" \
            --add item clock.nyc right \
            --set clock.nyc y_offset=-6 \
                            icon.drawing=off \
-                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                            label.color=$SUBTEXT
 
 sketchybar --add item wifi right \
@@ -117,23 +117,23 @@ sketchybar --add item temp.cpu right \
            --set temp.cpu width=0 \
                           y_offset=6 \
                           icon=CPU \
-                          icon.font="Hack Nerd Font:Bold:9.0" \
+                          icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
                           icon.color=$ACCENT_CPU \
                           icon.width=28 \
                           icon.align=left \
                           icon.padding_right=0 \
-                          label.font="Hack Nerd Font:Regular:10.0" \
+                          label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                           label.width=32 \
                           label.align=right \
            --add item temp.gpu right \
            --set temp.gpu y_offset=-6 \
                           icon=GPU \
-                          icon.font="Hack Nerd Font:Bold:9.0" \
+                          icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
                           icon.color=$ACCENT_GPU \
                           icon.width=28 \
                           icon.align=left \
                           icon.padding_right=0 \
-                          label.font="Hack Nerd Font:Regular:10.0" \
+                          label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                           label.width=32 \
                           label.align=right
 
@@ -142,23 +142,23 @@ sketchybar --add item stats.cpu right \
            --set stats.cpu width=0 \
                            y_offset=6 \
                            icon=CPU \
-                           icon.font="Hack Nerd Font:Bold:9.0" \
+                           icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
                            icon.color=$ACCENT_CPU \
                            icon.width=28 \
                            icon.align=left \
                            icon.padding_right=0 \
-                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                            label.width=32 \
                            label.align=right \
            --add item stats.gpu right \
            --set stats.gpu y_offset=-6 \
                            icon=GPU \
-                           icon.font="Hack Nerd Font:Bold:9.0" \
+                           icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
                            icon.color=$ACCENT_GPU \
                            icon.width=28 \
                            icon.align=left \
                            icon.padding_right=0 \
-                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                            label.width=32 \
                            label.align=right
 
@@ -196,12 +196,12 @@ sketchybar --add item mem.avail right \
            --set mem.avail width=0 \
                            y_offset=6 \
                            icon=RAM \
-                           icon.font="Hack Nerd Font:Bold:9.0" \
+                           icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
                            icon.color=$ACCENT_RAM \
                            icon.width=28 \
                            icon.align=left \
                            icon.padding_right=0 \
-                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                            label.width=52 \
                            label.align=right \
            --add item disk.avail right \
@@ -209,12 +209,12 @@ sketchybar --add item mem.avail right \
                             update_freq=300 \
                             script="$PLUGIN_DIR/disk.sh" \
                             icon=DSK \
-                            icon.font="Hack Nerd Font:Bold:9.0" \
+                            icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
                             icon.color=$SUBTEXT \
                             icon.width=28 \
                             icon.align=left \
                             icon.padding_right=0 \
-                            label.font="Hack Nerd Font:Regular:10.0" \
+                            label.font="JetBrainsMono Nerd Font:Regular:10.0" \
                             label.width=52 \
                             label.align=right
 
