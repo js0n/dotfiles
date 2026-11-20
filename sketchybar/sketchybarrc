@@ -125,7 +125,7 @@ sketchybar --add item net.rx right \
                         icon.align=left \
                         icon.padding_right=0 \
                         label.font="JetBrainsMono Nerd Font:Regular:10.0" \
-                        label.width=68 \
+                        label.width=50 \
                         label.align=right \
            --add item net.tx right \
            --set net.tx y_offset=-6 \
@@ -136,7 +136,7 @@ sketchybar --add item net.rx right \
                         icon.align=left \
                         icon.padding_right=0 \
                         label.font="JetBrainsMono Nerd Font:Regular:10.0" \
-                        label.width=68 \
+                        label.width=50 \
                         label.align=right \
            --subscribe net.rx system_woke
 
