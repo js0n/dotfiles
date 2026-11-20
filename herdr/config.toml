@@ -18,3 +18,9 @@ resize_pane_up = "prefix+shift+k"
 resize_pane_right = "prefix+shift+l"
 
 zoom = "prefix+z"
+
+# Moved off the prefix+shift defaults, which resize above
+swap_pane_left = "prefix+ctrl+h"
+swap_pane_down = "prefix+ctrl+j"
+swap_pane_up = "prefix+ctrl+k"
+swap_pane_right = "prefix+ctrl+l"
