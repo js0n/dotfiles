@@ -1,0 +1,5 @@
+[user]
+	name = Jason Wong
+	email = mail@jwon.gg
+[init]
+	defaultBranch = main
