@@ -10,5 +10,8 @@ alias ll="eza -la --git --group-directories-first --icons=auto"
 alias lt="eza --tree --level=2 --group-directories-first --icons=auto"
 alias lm="eza -la --sort=modified --git --icons=auto"
 
+# Disk usage (dua); `command du` reaches the system du
+alias du="dua"
+
 # Runtime versions (mise)
 eval "$(mise activate zsh)"
