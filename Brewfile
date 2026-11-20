@@ -41,6 +41,7 @@ cask "codex"
 cask "docker-desktop"
 cask "epic-games"
 cask "ghostty"
+cask "scrivener"
 cask "thebrowsercompany-dia"
 
 # Fonts
