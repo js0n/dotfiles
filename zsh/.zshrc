@@ -16,5 +16,25 @@ alias dui="dua i"
 alias dut="darya"   # treemap
 alias dux="gdu-go"  # cleanup; D moves to Trash
 
+# Local coding agents on oMLX: `ol <tool> [model] [-- tool flags]`
+# Preferred model per tool; any model in ~/.omlx/models can be named instead
+typeset -A OL_MODELS=(
+  claude   Qwen3.8-Flash-Next-oQ6e-mtp
+  codex    Qwen3.8-Flash-Next-oQ6e-mtp
+  opencode Qwen3.8-Flash-Next-oQ6e-mtp
+)
+ol() {
+  local tool=$1; shift
+  local model=${OL_MODELS[$tool]}
+  if [[ -n $1 && $1 != -* ]]; then model=$1; shift; fi
+  [[ $1 == -- ]] && shift
+  local -a pick=(); [[ -n $model ]] && pick=(--model "$model")
+  omlx launch "$tool" "${pick[@]}" -- "$@"
+}
+alias olc="ol claude"
+alias olx="ol codex"
+alias olo="ol opencode"
+alias olm="ls ~/.omlx/models"  # models on disk
+
 # Runtime versions (mise)
 eval "$(mise activate zsh)"
