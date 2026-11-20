@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$CONFIG_DIR/colors.sh"
+
 # $1 is the workspace id this item represents.
 # FOCUSED_WORKSPACE is set by the aerospace_workspace_change event;
 # fall back to querying aerospace directly (e.g. on initial load).
@@ -10,13 +12,13 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
 	sketchybar --animate tanh 12 \
 	           --set "$NAME" drawing=on \
 	                         background.drawing=on \
-	                         label.color=0xff4c4f69
+	                         label.color=$TEXT
 elif aerospace list-workspaces --monitor all --empty no | grep -qx "$1"; then
 	# Occupied: plain dark number, no fill
 	sketchybar --animate tanh 12 \
 	           --set "$NAME" drawing=on \
 	                         background.drawing=off \
-	                         label.color=0xff4c4f69
+	                         label.color=$TEXT
 else
 	sketchybar --set "$NAME" drawing=off
 fi

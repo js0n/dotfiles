@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$CONFIG_DIR/colors.sh"
+
 # Wi-Fi status icon like the native menu bar one: off / disconnected /
 # signal strength in four steps. RSSI comes from system_profiler since the
 # airport CLI was removed and wdutil needs sudo.
@@ -9,7 +11,7 @@ IFACE=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}')
 POWER=$(networksetup -getairportpower "$IFACE" 2>/dev/null | awk '{print $NF}')
 
 if [ "$POWER" != "On" ]; then
-  sketchybar --set "$NAME" icon=󰤮 icon.color=0xff9ca0b0
+  sketchybar --set "$NAME" icon=󰤮 icon.color=$MUTED
   exit 0
 fi
 
@@ -21,7 +23,7 @@ RSSI=$(system_profiler SPAirPortDataType -json 2>/dev/null | jq -r --arg iface "
 
 if [ -z "$RSSI" ]; then
   # Powered on but not connected
-  sketchybar --set "$NAME" icon=󰤯 icon.color=0xff9ca0b0
+  sketchybar --set "$NAME" icon=󰤯 icon.color=$MUTED
   exit 0
 fi
 
@@ -32,4 +34,4 @@ elif [ "$RSSI" -ge -80 ]; then ICON=󰤟
 else                           ICON=󰤯
 fi
 
-sketchybar --set "$NAME" icon="$ICON" icon.color=0xff4c4f69
+sketchybar --set "$NAME" icon="$ICON" icon.color=$TEXT

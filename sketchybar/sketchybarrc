@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
+source "$CONFIG_DIR/colors.sh"
 
 ##### Bar Appearance #####
 sketchybar --bar position=top \
@@ -9,13 +10,13 @@ sketchybar --bar position=top \
                  blur_radius=30 \
                  padding_left=8 \
                  padding_right=8 \
-                 color=0x00000000
+                 color=$TRANSPARENT
 
 ##### Item Defaults #####
 sketchybar --default icon.font="Hack Nerd Font:Bold:14.0" \
-                     icon.color=0xff4c4f69 \
+                     icon.color=$TEXT \
                      label.font="Hack Nerd Font:Regular:13.0" \
-                     label.color=0xff4c4f69 \
+                     label.color=$TEXT \
                      padding_left=6 \
                      padding_right=6 \
                      icon.padding_left=4 \
@@ -43,7 +44,7 @@ for label in $(aerospace list-workspaces --all | sed 's/^10$/0/' | sort -V); do
                                 icon.padding_right=0 \
                                 padding_left=2 \
                                 padding_right=2 \
-                                background.color=0xffccd0da \
+                                background.color=$SURFACE \
                                 background.corner_radius=6 \
                                 background.height=22 \
                                 background.drawing=off \
@@ -59,7 +60,7 @@ sketchybar --add item mem.avail center \
                            y_offset=6 \
                            icon=RAM \
                            icon.font="Hack Nerd Font:Bold:9.0" \
-                           icon.color=0xff40a02b \
+                           icon.color=$ACCENT_RAM \
                            icon.width=28 \
                            icon.align=left \
                            icon.padding_right=0 \
@@ -72,7 +73,7 @@ sketchybar --add item mem.avail center \
                             script="$PLUGIN_DIR/disk.sh" \
                             icon=DSK \
                             icon.font="Hack Nerd Font:Bold:9.0" \
-                            icon.color=0xff6c6f85 \
+                            icon.color=$SUBTEXT \
                             icon.width=28 \
                             icon.align=left \
                             icon.padding_right=0 \
@@ -85,24 +86,24 @@ sketchybar --add item mem.avail center \
 sketchybar --add graph cpu.graph center 60 \
            --set cpu.graph update_freq=5 \
                            script="$PLUGIN_DIR/stats.sh" \
-                           graph.color=0xfffe640b \
-                           graph.fill_color=0x30fe640b \
+                           graph.color=$ACCENT_CPU \
+                           graph.fill_color=$FILL_CPU \
                            graph.line_width=1.5 \
                            icon.drawing=off \
                            label.drawing=off \
                            padding_left=0 \
                            padding_right=0 \
            --add graph gpu.graph center 60 \
-           --set gpu.graph graph.color=0xff1e66f5 \
-                           graph.fill_color=0x201e66f5 \
+           --set gpu.graph graph.color=$ACCENT_GPU \
+                           graph.fill_color=$FILL_GPU \
                            graph.line_width=1.5 \
                            icon.drawing=off \
                            label.drawing=off \
                            padding_left=-60 \
                            padding_right=0 \
            --add graph mem.graph center 60 \
-           --set mem.graph graph.color=0xff40a02b \
-                           graph.fill_color=0x2040a02b \
+           --set mem.graph graph.color=$ACCENT_RAM \
+                           graph.fill_color=$FILL_RAM \
                            graph.line_width=1.5 \
                            icon.drawing=off \
                            label.drawing=off \
@@ -115,7 +116,7 @@ sketchybar --add item stats.cpu center \
                            y_offset=6 \
                            icon=CPU \
                            icon.font="Hack Nerd Font:Bold:9.0" \
-                           icon.color=0xfffe640b \
+                           icon.color=$ACCENT_CPU \
                            icon.width=28 \
                            icon.align=left \
                            icon.padding_right=0 \
@@ -126,7 +127,7 @@ sketchybar --add item stats.cpu center \
            --set stats.gpu y_offset=-6 \
                            icon=GPU \
                            icon.font="Hack Nerd Font:Bold:9.0" \
-                           icon.color=0xff1e66f5 \
+                           icon.color=$ACCENT_GPU \
                            icon.width=28 \
                            icon.align=left \
                            icon.padding_right=0 \
@@ -140,7 +141,7 @@ sketchybar --add item temp.cpu center \
                           y_offset=6 \
                           icon=CPU \
                           icon.font="Hack Nerd Font:Bold:9.0" \
-                          icon.color=0xfffe640b \
+                          icon.color=$ACCENT_CPU \
                           icon.width=28 \
                           icon.align=left \
                           icon.padding_right=0 \
@@ -151,7 +152,7 @@ sketchybar --add item temp.cpu center \
            --set temp.gpu y_offset=-6 \
                           icon=GPU \
                           icon.font="Hack Nerd Font:Bold:9.0" \
-                          icon.color=0xff1e66f5 \
+                          icon.color=$ACCENT_GPU \
                           icon.width=28 \
                           icon.align=left \
                           icon.padding_right=0 \
@@ -180,14 +181,14 @@ sketchybar --add item clock.utc center \
                            y_offset=6 \
                            icon.drawing=off \
                            label.font="Hack Nerd Font:Regular:10.0" \
-                           label.color=0xff6c6f85 \
+                           label.color=$SUBTEXT \
                            update_freq=10 \
                            script="$PLUGIN_DIR/clock_zones.sh" \
            --add item clock.nyc center \
            --set clock.nyc y_offset=-6 \
                            icon.drawing=off \
                            label.font="Hack Nerd Font:Regular:10.0" \
-                           label.color=0xff6c6f85
+                           label.color=$SUBTEXT
 
 # Local time (timezone geolocated from external IP): full date stacked over
 # 24h time with seconds + zone abbreviation
@@ -196,7 +197,7 @@ sketchybar --add item clock.date center \
                             y_offset=6 \
                             icon.drawing=off \
                             label.font="Hack Nerd Font:Regular:10.0" \
-                            label.color=0xff6c6f85 \
+                            label.color=$SUBTEXT \
                             label.width=100 \
                             label.align=right \
                             update_freq=1 \
