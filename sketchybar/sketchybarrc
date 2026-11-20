@@ -103,6 +103,34 @@ sketchybar --add item wifi right \
                       script="$PLUGIN_DIR/wifi.sh" \
            --subscribe wifi wifi_change system_woke
 
+# Network download/upload rate, stacked (left of wifi)
+sketchybar --add item net.rx right \
+           --set net.rx width=0 \
+                        y_offset=6 \
+                        update_freq=2 \
+                        script="$PLUGIN_DIR/net.sh" \
+                        icon=DN \
+                        icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
+                        icon.color=$ACCENT_NET \
+                        icon.width=28 \
+                        icon.align=left \
+                        icon.padding_right=0 \
+                        label.font="JetBrainsMono Nerd Font:Regular:10.0" \
+                        label.width=68 \
+                        label.align=right \
+           --add item net.tx right \
+           --set net.tx y_offset=-6 \
+                        icon=UP \
+                        icon.font="JetBrainsMono Nerd Font:Bold:9.0" \
+                        icon.color=$ACCENT_NET \
+                        icon.width=28 \
+                        icon.align=left \
+                        icon.padding_right=0 \
+                        label.font="JetBrainsMono Nerd Font:Regular:10.0" \
+                        label.width=68 \
+                        label.align=right \
+           --subscribe net.rx system_woke
+
 sketchybar --add item battery right \
            --set battery update_freq=120 \
                          script="$PLUGIN_DIR/battery.sh" \

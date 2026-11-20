@@ -15,6 +15,7 @@ export HIGHLIGHT=0xff2e7de9  # day blue: focused workspace number
 export ACCENT_CPU=0xffb15c00  # day orange
 export ACCENT_GPU=0xff2e7de9  # day blue
 export ACCENT_RAM=0xff587539  # day green
+export ACCENT_NET=0xff007197  # day cyan
 
 # Graph fills: the accents at low alpha
 export FILL_CPU=0x30b15c00
