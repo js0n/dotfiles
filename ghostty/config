@@ -1,4 +1,5 @@
 font-family = JetBrainsMono Nerd Font
+theme = dark:Nord,light:Nord Light
 background-opacity = 0.8
 macos-titlebar-style = hidden
 working-directory = /Users/jwlabs/Workspace/riker
