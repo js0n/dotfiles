@@ -1,4 +1,4 @@
 font-family = JetBrainsMono Nerd Font
 background-opacity = 0.8
-window-decoration = none
+macos-titlebar-style = hidden
 working-directory = /Users/jwlabs/Workspace/riker
