@@ -9,7 +9,7 @@ sketchybar --bar position=top \
                  blur_radius=30 \
                  padding_left=8 \
                  padding_right=8 \
-                 color=0xcc1e1e2e
+                 color=0x00000000
 
 ##### Item Defaults #####
 sketchybar --default icon.font="Hack Nerd Font:Bold:14.0" \
