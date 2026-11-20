@@ -12,6 +12,7 @@ alias lm="eza -la --sort=modified --git --icons=auto"
 
 # Disk usage (dua); `command du` reaches the system du
 alias du="dua"
+alias dui="dua i"
 
 # Runtime versions (mise)
 eval "$(mise activate zsh)"
