@@ -1,11 +1,13 @@
 #!/bin/bash
 
+# Focused window glows; unfocused windows get a faint outline.
+# Keep width below half of AeroSpace's inner gap so neighbouring borders never touch.
 options=(
   style=round
-  width=5.0
+  width=6.0
   hidpi=on
-  active_color=0xffe1e3e4
-  inactive_color=0xff494d64
+  active_color="glow(0xffb7bdf8)"
+  inactive_color=0x80494d64
 )
 
 borders "${options[@]}"
