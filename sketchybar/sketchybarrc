@@ -5,7 +5,7 @@ source "$CONFIG_DIR/colors.sh"
 
 ##### Bar Appearance #####
 sketchybar --bar position=top \
-                 height=38 \
+                 height=30 \
                  topmost=window \
                  blur_radius=30 \
                  padding_left=8 \
