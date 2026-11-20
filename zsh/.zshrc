@@ -1,6 +1,9 @@
 # Prompt
 eval "$(starship init zsh)"
 
+# Editor
+alias vim="nvim"
+
 # Listing (eza)
 alias l="eza --group-directories-first --icons=auto"
 alias ll="eza -la --git --group-directories-first --icons=auto"
