@@ -1,4 +1,4 @@
 [tools]
 go = "latest"
 node = "lts"
-ruby = "3"
+ruby = "4"
