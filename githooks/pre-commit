@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Block commits that contain secrets. Enable once per clone with:
+#   git config core.hooksPath githooks
+exec gitleaks git --pre-commit --staged --no-banner --redact
