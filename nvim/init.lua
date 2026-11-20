@@ -43,7 +43,12 @@ vim.pack.add({
     "https://github.com/nvim-tree/nvim-tree.lua",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
+    "https://github.com/folke/tokyonight.nvim",
 })
+
+-- Colors: Tokyo Night, matching Ghostty (Night when dark, Day when light)
+require("tokyonight").setup({ style = "night", light_style = "day" })
+vim.cmd.colorscheme("tokyonight")
 
 -- File tree
 require("nvim-tree").setup({
