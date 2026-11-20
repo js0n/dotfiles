@@ -3,9 +3,10 @@
 # Focused window glows; unfocused windows get a faint outline.
 # Keep width below half of AeroSpace's inner gap so neighbouring borders never touch.
 options=(
-  # Square only squares the inner edge at width >= 52 on macOS 26
-  style=round
-  width=6.0
+  # uniform: fixed 9pt corner radius instead of following the window's larger one.
+  # Square only squares the inner edge at width >= 52 on macOS 26.
+  style=uniform
+  width=3.0
   hidpi=on
   active_color="glow(0xffb7bdf8)"
   inactive_color=0x80494d64
