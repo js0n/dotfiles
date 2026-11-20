@@ -10,6 +10,11 @@ config-version = 2
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = []
 
+# Tell SketchyBar which workspace is focused so its workspace switcher updates
+exec-on-workspace-change = ['/bin/bash', '-c',
+    '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
 # Start AeroSpace at login
 start-at-login = false
 
@@ -77,7 +82,7 @@ gaps.inner.horizontal = 8
 gaps.inner.vertical =   8
 gaps.outer.left =       6
 gaps.outer.bottom =     6
-gaps.outer.top =        6
+gaps.outer.top =        44
 gaps.outer.right =      6
 
 # 'main' binding mode declaration
