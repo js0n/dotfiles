@@ -6,11 +6,11 @@
 FOCUSED_WORKSPACE="${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused)}"
 
 if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-	# Focused: slate cell, light text
+	# Focused: soft gray cell, dark text
 	sketchybar --animate tanh 12 \
 	           --set "$NAME" drawing=on \
 	                         background.drawing=on \
-	                         label.color=0xffeff1f5
+	                         label.color=0xff4c4f69
 elif aerospace list-workspaces --monitor all --empty no | grep -qx "$1"; then
 	# Occupied: plain dark number, no fill
 	sketchybar --animate tanh 12 \
