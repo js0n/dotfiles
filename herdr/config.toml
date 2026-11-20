@@ -24,6 +24,10 @@ new_tab = "prefix+t"
 rename_tab = "prefix+$"
 detach = "prefix+d"
 
+# Workspaces
+previous_workspace = "prefix+up"
+next_workspace = "prefix+down"
+
 # Moved off the prefix+shift defaults, which resize above
 swap_pane_left = "prefix+ctrl+h"
 swap_pane_down = "prefix+ctrl+j"
