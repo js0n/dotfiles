@@ -52,6 +52,15 @@ for label in $(aerospace list-workspaces --all | sed 's/^10$/0/' | sort -V); do
                                 script="$PLUGIN_DIR/aerospace.sh $sid"
 done
 
+##### Left: front app, next to the workspaces #####
+sketchybar --add item front_app left \
+           --set front_app icon.drawing=off \
+                           padding_left=10 \
+                           label.font="Hack Nerd Font:Bold:12.0" \
+                           label.color=$TEXT \
+                           script="$PLUGIN_DIR/front_app.sh" \
+           --subscribe front_app front_app_switched
+
 ##### Right: system stats | volume, battery, wifi | clocks #####
 # Right items lay out from the right edge inward in the order they are added,
 # so the clock comes first.
