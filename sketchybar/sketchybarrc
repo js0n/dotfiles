@@ -65,7 +65,7 @@ sketchybar --add item mem.avail center \
                            icon.align=left \
                            icon.padding_right=0 \
                            label.font="Hack Nerd Font:Regular:10.0" \
-                           label.width=44 \
+                           label.width=52 \
                            label.align=right \
            --add item disk.avail center \
            --set disk.avail y_offset=-6 \
@@ -78,7 +78,7 @@ sketchybar --add item mem.avail center \
                             icon.align=left \
                             icon.padding_right=0 \
                             label.font="Hack Nerd Font:Regular:10.0" \
-                            label.width=44 \
+                            label.width=52 \
                             label.align=right
 
 # CPU (peach) + GPU (blue) + RAM (green) sparklines overlaid on one 60pt graph
