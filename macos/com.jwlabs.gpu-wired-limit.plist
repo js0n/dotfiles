@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Let the GPU wire up to ~234 GB of the 256 GB so large local models fit.
+     macOS resets this sysctl on every boot, so launchd reapplies it.
+     Installed to /Library/LaunchDaemons by macos/setup.sh. -->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.jwlabs.gpu-wired-limit</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/sbin/sysctl</string>
+        <string>iogpu.wired_limit_mb=240000</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
