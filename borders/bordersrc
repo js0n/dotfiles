@@ -8,8 +8,9 @@ options=(
   style=round
   width=3.0
   hidpi=on
-  active_color="glow(0xffb7bdf8)"
-  inactive_color=0x80494d64
+  # Nord palette: nord8 frost blue glow, nord3 faint outline
+  active_color="glow(0xff88c0d0)"
+  inactive_color=0x804c566a
   # Matched against the process name, which is lowercase
   whitelist="ghostty"
 )
