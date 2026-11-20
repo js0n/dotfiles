@@ -22,6 +22,8 @@ zoom = "prefix+z"
 # Tabs and session (tmux-style)
 new_tab = "prefix+t"
 rename_tab = "prefix+$"
+previous_tab = "prefix+{"
+next_tab = "prefix+}"
 detach = "prefix+d"
 
 # Workspaces
