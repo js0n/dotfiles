@@ -24,7 +24,7 @@ sketchybar --default icon.font="Hack Nerd Font:Bold:14.0" \
                      label.padding_left=4 \
                      label.padding_right=4
 
-##### Center, left to right: workspaces | system stats | volume, battery, wifi | clocks #####
+##### Left: aerospace workspaces #####
 sketchybar --add event aerospace_workspace_change
 
 # Rename 10 -> 0 before sorting so the alt-0 cell leads the row, then sort -V
@@ -32,7 +32,7 @@ sketchybar --add event aerospace_workspace_change
 for label in $(aerospace list-workspaces --all | sed 's/^10$/0/' | sort -V); do
     sid="$label"
     [ "$label" = "0" ] && sid="10"
-    sketchybar --add item space.$sid center \
+    sketchybar --add item space.$sid left \
                --subscribe space.$sid aerospace_workspace_change \
                --set space.$sid label="$label" \
                                 label.font="Hack Nerd Font:Bold:12.0" \
@@ -52,10 +52,141 @@ for label in $(aerospace list-workspaces --all | sed 's/^10$/0/' | sort -V); do
                                 script="$PLUGIN_DIR/aerospace.sh $sid"
 done
 
-# Center items lay out left to right in the order they are added.
+##### Right: system stats | volume, battery, wifi | clocks #####
+# Right items lay out from the right edge inward in the order they are added,
+# so the clock comes first.
+
+# Local time (timezone geolocated from external IP): full date stacked over
+# 24h time with seconds + zone abbreviation
+sketchybar --add item clock.date right \
+           --set clock.date width=0 \
+                            y_offset=6 \
+                            icon.drawing=off \
+                            label.font="Hack Nerd Font:Regular:10.0" \
+                            label.color=$SUBTEXT \
+                            label.width=100 \
+                            label.align=right \
+                            update_freq=1 \
+                            script="$PLUGIN_DIR/clock.sh" \
+           --add item clock.time right \
+           --set clock.time y_offset=-6 \
+                            icon.drawing=off \
+                            label.font="Hack Nerd Font:Regular:10.0" \
+                            label.width=100 \
+                            label.align=right \
+           --subscribe clock.date system_woke
+
+# UTC + New York time, stacked into one slot
+sketchybar --add item clock.utc right \
+           --set clock.utc width=0 \
+                           y_offset=6 \
+                           icon.drawing=off \
+                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.color=$SUBTEXT \
+                           update_freq=10 \
+                           script="$PLUGIN_DIR/clock_zones.sh" \
+           --add item clock.nyc right \
+           --set clock.nyc y_offset=-6 \
+                           icon.drawing=off \
+                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.color=$SUBTEXT
+
+sketchybar --add item wifi right \
+           --set wifi update_freq=20 \
+                      label.drawing=off \
+                      script="$PLUGIN_DIR/wifi.sh" \
+           --subscribe wifi wifi_change system_woke
+
+sketchybar --add item battery right \
+           --set battery update_freq=120 \
+                         script="$PLUGIN_DIR/battery.sh" \
+           --subscribe battery system_woke power_source_change
+
+sketchybar --add item volume right \
+           --set volume script="$PLUGIN_DIR/volume.sh" \
+           --subscribe volume volume_change
+
+# CPU/GPU die temps, stacked
+sketchybar --add item temp.cpu right \
+           --set temp.cpu width=0 \
+                          y_offset=6 \
+                          icon=CPU \
+                          icon.font="Hack Nerd Font:Bold:9.0" \
+                          icon.color=$ACCENT_CPU \
+                          icon.width=28 \
+                          icon.align=left \
+                          icon.padding_right=0 \
+                          label.font="Hack Nerd Font:Regular:10.0" \
+                          label.width=32 \
+                          label.align=right \
+           --add item temp.gpu right \
+           --set temp.gpu y_offset=-6 \
+                          icon=GPU \
+                          icon.font="Hack Nerd Font:Bold:9.0" \
+                          icon.color=$ACCENT_GPU \
+                          icon.width=28 \
+                          icon.align=left \
+                          icon.padding_right=0 \
+                          label.font="Hack Nerd Font:Regular:10.0" \
+                          label.width=32 \
+                          label.align=right
+
+# Current CPU/GPU utilization, stacked (colors match the graph lines)
+sketchybar --add item stats.cpu right \
+           --set stats.cpu width=0 \
+                           y_offset=6 \
+                           icon=CPU \
+                           icon.font="Hack Nerd Font:Bold:9.0" \
+                           icon.color=$ACCENT_CPU \
+                           icon.width=28 \
+                           icon.align=left \
+                           icon.padding_right=0 \
+                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.width=32 \
+                           label.align=right \
+           --add item stats.gpu right \
+           --set stats.gpu y_offset=-6 \
+                           icon=GPU \
+                           icon.font="Hack Nerd Font:Bold:9.0" \
+                           icon.color=$ACCENT_GPU \
+                           icon.width=28 \
+                           icon.align=left \
+                           icon.padding_right=0 \
+                           label.font="Hack Nerd Font:Regular:10.0" \
+                           label.width=32 \
+                           label.align=right
+
+# CPU (peach) + GPU (blue) + RAM (green) sparklines overlaid on one 60pt graph
+# (~5 min history); the later graphs pull 60pt back over the first
+sketchybar --add graph cpu.graph right 60 \
+           --set cpu.graph update_freq=5 \
+                           script="$PLUGIN_DIR/stats.sh" \
+                           graph.color=$ACCENT_CPU \
+                           graph.fill_color=$FILL_CPU \
+                           graph.line_width=1.5 \
+                           icon.drawing=off \
+                           label.drawing=off \
+                           padding_left=0 \
+                           padding_right=0 \
+           --add graph gpu.graph right 60 \
+           --set gpu.graph graph.color=$ACCENT_GPU \
+                           graph.fill_color=$FILL_GPU \
+                           graph.line_width=1.5 \
+                           icon.drawing=off \
+                           label.drawing=off \
+                           padding_left=0 \
+                           padding_right=-60 \
+           --add graph mem.graph right 60 \
+           --set mem.graph graph.color=$ACCENT_RAM \
+                           graph.fill_color=$FILL_RAM \
+                           graph.line_width=1.5 \
+                           icon.drawing=off \
+                           label.drawing=off \
+                           padding_left=0 \
+                           padding_right=-60
 
 # Available RAM (MB) + free disk, stacked
-sketchybar --add item mem.avail center \
+sketchybar --add item mem.avail right \
            --set mem.avail width=0 \
                            y_offset=6 \
                            icon=RAM \
@@ -67,7 +198,7 @@ sketchybar --add item mem.avail center \
                            label.font="Hack Nerd Font:Regular:10.0" \
                            label.width=52 \
                            label.align=right \
-           --add item disk.avail center \
+           --add item disk.avail right \
            --set disk.avail y_offset=-6 \
                             update_freq=300 \
                             script="$PLUGIN_DIR/disk.sh" \
@@ -80,135 +211,6 @@ sketchybar --add item mem.avail center \
                             label.font="Hack Nerd Font:Regular:10.0" \
                             label.width=52 \
                             label.align=right
-
-# CPU (peach) + GPU (blue) + RAM (green) sparklines overlaid on one 60pt graph
-# (~5 min history); the later graphs pull back 60pt to sit on top of the first
-sketchybar --add graph cpu.graph center 60 \
-           --set cpu.graph update_freq=5 \
-                           script="$PLUGIN_DIR/stats.sh" \
-                           graph.color=$ACCENT_CPU \
-                           graph.fill_color=$FILL_CPU \
-                           graph.line_width=1.5 \
-                           icon.drawing=off \
-                           label.drawing=off \
-                           padding_left=0 \
-                           padding_right=0 \
-           --add graph gpu.graph center 60 \
-           --set gpu.graph graph.color=$ACCENT_GPU \
-                           graph.fill_color=$FILL_GPU \
-                           graph.line_width=1.5 \
-                           icon.drawing=off \
-                           label.drawing=off \
-                           padding_left=-60 \
-                           padding_right=0 \
-           --add graph mem.graph center 60 \
-           --set mem.graph graph.color=$ACCENT_RAM \
-                           graph.fill_color=$FILL_RAM \
-                           graph.line_width=1.5 \
-                           icon.drawing=off \
-                           label.drawing=off \
-                           padding_left=-60 \
-                           padding_right=0
-
-# Current CPU/GPU utilization, stacked (colors match the graph lines)
-sketchybar --add item stats.cpu center \
-           --set stats.cpu width=0 \
-                           y_offset=6 \
-                           icon=CPU \
-                           icon.font="Hack Nerd Font:Bold:9.0" \
-                           icon.color=$ACCENT_CPU \
-                           icon.width=28 \
-                           icon.align=left \
-                           icon.padding_right=0 \
-                           label.font="Hack Nerd Font:Regular:10.0" \
-                           label.width=32 \
-                           label.align=right \
-           --add item stats.gpu center \
-           --set stats.gpu y_offset=-6 \
-                           icon=GPU \
-                           icon.font="Hack Nerd Font:Bold:9.0" \
-                           icon.color=$ACCENT_GPU \
-                           icon.width=28 \
-                           icon.align=left \
-                           icon.padding_right=0 \
-                           label.font="Hack Nerd Font:Regular:10.0" \
-                           label.width=32 \
-                           label.align=right
-
-# CPU/GPU die temps, stacked
-sketchybar --add item temp.cpu center \
-           --set temp.cpu width=0 \
-                          y_offset=6 \
-                          icon=CPU \
-                          icon.font="Hack Nerd Font:Bold:9.0" \
-                          icon.color=$ACCENT_CPU \
-                          icon.width=28 \
-                          icon.align=left \
-                          icon.padding_right=0 \
-                          label.font="Hack Nerd Font:Regular:10.0" \
-                          label.width=32 \
-                          label.align=right \
-           --add item temp.gpu center \
-           --set temp.gpu y_offset=-6 \
-                          icon=GPU \
-                          icon.font="Hack Nerd Font:Bold:9.0" \
-                          icon.color=$ACCENT_GPU \
-                          icon.width=28 \
-                          icon.align=left \
-                          icon.padding_right=0 \
-                          label.font="Hack Nerd Font:Regular:10.0" \
-                          label.width=32 \
-                          label.align=right
-
-sketchybar --add item volume center \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-           --subscribe volume volume_change
-
-sketchybar --add item battery center \
-           --set battery update_freq=120 \
-                         script="$PLUGIN_DIR/battery.sh" \
-           --subscribe battery system_woke power_source_change
-
-sketchybar --add item wifi center \
-           --set wifi update_freq=20 \
-                      label.drawing=off \
-                      script="$PLUGIN_DIR/wifi.sh" \
-           --subscribe wifi wifi_change system_woke
-
-# UTC + New York time, stacked into one slot
-sketchybar --add item clock.utc center \
-           --set clock.utc width=0 \
-                           y_offset=6 \
-                           icon.drawing=off \
-                           label.font="Hack Nerd Font:Regular:10.0" \
-                           label.color=$SUBTEXT \
-                           update_freq=10 \
-                           script="$PLUGIN_DIR/clock_zones.sh" \
-           --add item clock.nyc center \
-           --set clock.nyc y_offset=-6 \
-                           icon.drawing=off \
-                           label.font="Hack Nerd Font:Regular:10.0" \
-                           label.color=$SUBTEXT
-
-# Local time (timezone geolocated from external IP): full date stacked over
-# 24h time with seconds + zone abbreviation
-sketchybar --add item clock.date center \
-           --set clock.date width=0 \
-                            y_offset=6 \
-                            icon.drawing=off \
-                            label.font="Hack Nerd Font:Regular:10.0" \
-                            label.color=$SUBTEXT \
-                            label.width=100 \
-                            label.align=right \
-                            update_freq=1 \
-                            script="$PLUGIN_DIR/clock.sh" \
-           --add item clock.time center \
-           --set clock.time y_offset=-6 \
-                            icon.drawing=off \
-                            label.font="Hack Nerd Font:Regular:10.0" \
-                            label.width=100 \
-                            label.align=right \
-           --subscribe clock.date system_woke
 
 ##### Finalize #####
 sketchybar --update
