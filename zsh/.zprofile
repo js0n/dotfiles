@@ -8,3 +8,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # mise shims for non-interactive shells; .zshrc activates mise fully
 eval "$(mise activate zsh --shims)"
+
+# Hugging Face downloads: fetch Xet chunks with full parallelism
+export HF_XET_HIGH_PERFORMANCE=1
