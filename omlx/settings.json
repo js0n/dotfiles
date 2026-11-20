@@ -1,0 +1,9 @@
+{
+  "server": {
+    "port": 8800
+  },
+  "memory": {
+    "memory_guard_tier": "custom",
+    "memory_guard_custom_ceiling_gb": 228
+  }
+}
