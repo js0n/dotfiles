@@ -13,6 +13,8 @@ alias lm="eza -la --sort=modified --git --icons=auto"
 # Disk usage (dua); `command du` reaches the system du
 alias du="dua"
 alias dui="dua i"
+alias dut="darya"   # treemap
+alias dux="gdu-go"  # cleanup; D moves to Trash
 
 # Runtime versions (mise)
 eval "$(mise activate zsh)"
