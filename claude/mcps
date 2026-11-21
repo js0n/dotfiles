@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# List Claude Code MCP servers by scope, across every project.
+#   user:    every project       (~/.claude.json, top level)
+#   local:   one folder, private (~/.claude.json, per project path)
+#   project: shared in the repo  (.mcp.json, needs approval in each clone)
+# Account connectors from claude.ai and plugin servers are not in these files.
+set -euo pipefail
+
+show() { jq -r 'to_entries[] | "    \(.key)  \(.value.url // ([.value.command] + (.value.args // []) | join(" ")))"'; }
+
+echo "user"
+jq '.mcpServers // {}' ~/.claude.json | show
+
+jq -r '.projects // {} | to_entries[] | select((.value.mcpServers // {}) | length > 0) | .key' ~/.claude.json |
+  while read -r dir; do
+    echo "local  ${dir/#$HOME/~}"
+    jq --arg d "$dir" '.projects[$d].mcpServers' ~/.claude.json | show
+  done
+
+for f in ~/Workspace/*/.mcp.json ~/Workspace/*/projects/*/.mcp.json; do
+  [ -f "$f" ] || continue
+  d=$(dirname "$f")
+  echo "project  ${d/#$HOME/~}"
+  jq '.mcpServers // {}' "$f" | show
+done
