@@ -231,3 +231,8 @@ gaps.outer.right =      6
 [[on-window-detected]]
 if.app-id = 'company.thebrowser.dia'
 run = 'layout tiling'
+
+# The Epic Games Launcher is a store and library window, not a work window
+[[on-window-detected]]
+if.app-id = 'com.epicgames.EpicGamesLauncher'
+run = 'layout floating'
