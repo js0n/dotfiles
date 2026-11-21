@@ -33,7 +33,6 @@ oml() {
 }
 alias olc="oml claude"
 alias olx="oml codex"
-alias olo="oml opencode"
 alias olm="ls ~/.omlx/models"  # models on disk
 
 # Runtime versions (mise)
