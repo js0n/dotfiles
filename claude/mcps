@@ -1,26 +1,85 @@
 #!/bin/bash
 
 # List Claude Code MCP servers by scope, across every project.
-#   user:    every project       (~/.claude.json, top level)
+#   global:  every project       (~/.claude.json, top level)
 #   local:   one folder, private (~/.claude.json, per project path)
 #   project: shared in the repo  (.mcp.json, needs approval in each clone)
 # Account connectors from claude.ai and plugin servers are not in these files.
+# Usage: mcps [-s]   -s adds a live health check per server (a few seconds)
 set -euo pipefail
 
-show() { jq -r 'to_entries[] | "    \(.key)  \(.value.url // ([.value.command] + (.value.args // []) | join(" ")))"'; }
+STATUS=0
+[ "${1:-}" = "-s" ] && STATUS=1
 
-echo "user"
-jq '.mcpServers // {}' ~/.claude.json | show
+# The terminal theme's own ANSI colors, so dark and light themes both stay legible
+BLUE=$'\033[34m'; CYAN=$'\033[36m'; GREEN=$'\033[32m'; RED=$'\033[31m'
+YELLOW=$'\033[33m'; BOLD=$'\033[1m'; RESET=$'\033[0m'
+GUARD="$HOME/Workspace/dotfiles/claude/mcp-guard"
+SEP=$'\x1f'
 
-jq -r '.projects // {} | to_entries[] | select((.value.mcpServers // {}) | length > 0) | .key' ~/.claude.json |
-  while read -r dir; do
-    echo "local  ${dir/#$HOME/~}"
-    jq --arg d "$dir" '.projects[$d].mcpServers' ~/.claude.json | show
+# One line per server: name, type, target, note
+rows() {
+  jq -r --arg guard "$GUARD" '
+    to_entries[] | .value as $v |
+    ([$v.command] + ($v.args // [])) as $cmd |
+    (($cmd[0] // "") == $guard) as $guarded |
+    (if $guarded then $cmd[2:] else $cmd end) as $run |
+    [ (.key),
+      ($v.type // (if $v.url then "http" else "stdio" end)),
+      ((if $v.url then $v.url else ($run | .[0] |= (split("/") | last) | join(" ")) end) | sub("^https?://"; "")),
+      (if $guarded then "repo only" else "-" end)
+    ] | join("\u001f")'
+}
+
+# Folder, title, subtitle and server JSON for each section
+sections() {
+  printf '%s\n' "$HOME${SEP}GLOBAL${SEP}every project${SEP}$(jq -c '.mcpServers // {}' ~/.claude.json)"
+  jq -r '.projects // {} | to_entries[] | select((.value.mcpServers // {}) | length > 0) | .key' ~/.claude.json |
+    while read -r dir; do
+      printf '%s\n' "$dir${SEP}LOCAL${SEP}${dir/#$HOME/~}${SEP}$(jq -c --arg d "$dir" '.projects[$d].mcpServers' ~/.claude.json)"
+    done
+  for f in ~/Workspace/*/.mcp.json ~/Workspace/*/projects/*/.mcp.json; do
+    [ -f "$f" ] || continue
+    d=$(dirname "$f")
+    printf '%s\n' "$d${SEP}PROJECT${SEP}${d/#$HOME/~}  shared via .mcp.json${SEP}$(jq -c '.mcpServers // {}' "$f")"
   done
+}
 
-for f in ~/Workspace/*/.mcp.json ~/Workspace/*/projects/*/.mcp.json; do
-  [ -f "$f" ] || continue
-  d=$(dirname "$f")
-  echo "project  ${d/#$HOME/~}"
-  jq '.mcpServers // {}' "$f" | show
-done
+LIST=$(sections)
+
+# Health checks: one `claude mcp list` per folder, all at once
+CHECKS=$(mktemp -d)
+trap 'rm -rf "$CHECKS"' EXIT
+if [ $STATUS = 1 ]; then
+  i=0
+  while IFS=$SEP read -r dir _; do
+    (cd "$dir" && claude mcp list 2>/dev/null) >"$CHECKS/$i" &
+    i=$((i + 1))
+  done <<<"$LIST"
+  wait
+fi
+
+i=0
+while IFS=$SEP read -r dir title sub json; do
+  n=$i; i=$((i + 1))
+  [ "$(jq 'length' <<<"$json")" -gt 0 ] || continue
+  printf '\n%s%s%s  %s\n' "$BOLD$BLUE" "$title" "$RESET" "$sub"
+  while IFS=$SEP read -r name type target note; do
+    dot=""
+    note=${note#-}
+    if [ $STATUS = 1 ]; then
+      line=$(grep -F "$name: " "$CHECKS/$n" | head -1 || true)
+      case $line in
+        *"✔"*) dot="${GREEN}●${RESET} " ;;
+        *"✘"*) dot="${RED}●${RESET} "; note="${note:+$note, }failing" ;;
+        *"⏸"*) dot="${YELLOW}●${RESET} "; note="${note:+$note, }needs approval" ;;
+        *) dot="○ " ;;
+      esac
+    fi
+    [ ${#target} -gt 46 ] && target="${target:0:45}…"
+    pad=$((47 - ${#target}))  # printf pads by bytes, so pad by characters here
+    printf '  %s%s%-12s%s %s%-6s%s %s%*s %s%s%s\n' "$dot" "$BOLD$CYAN" "$name" "$RESET" \
+      "" "$type" "" "$target" "$pad" "" "$YELLOW" "$note" "$RESET"
+  done < <(rows <<<"$json")
+done <<<"$LIST"
+echo
