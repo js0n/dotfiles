@@ -36,6 +36,7 @@ brew "jundot/omlx/omlx"
 
 # Apps
 cask "1password"
+cask "1password-cli"
 cask "claude-code"
 cask "codex"
 cask "docker-desktop"
