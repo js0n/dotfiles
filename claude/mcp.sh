@@ -2,11 +2,11 @@
 
 # Claude Code MCP servers. Safe to rerun.
 #   user_server:    every project (stored in ~/.claude.json)
-#   project_server: one repository only, never its worktrees (via mcp-guard)
+#   project_server: one repository only, never its worktrees (via `mcps guard`)
 # Servers that carry tokens (the GitHub server) are added by hand, not here.
 set -euo pipefail
 
-GUARD="$(cd "$(dirname "$0")" && pwd)/mcp-guard"
+MCPS="$(command -v mcps)"  # brew install js0n/tap/mcps
 
 user_server() {
   local name=$1; shift
@@ -19,7 +19,7 @@ project_server() {
   (
     cd "$dir"
     claude mcp remove --scope local "$name" >/dev/null 2>&1 || true
-    claude mcp add --scope local "$name" -- "$GUARD" "$dir" "$@"
+    claude mcp add --scope local "$name" -- "$MCPS" guard "$dir" -- "$@"
   )
 }
 

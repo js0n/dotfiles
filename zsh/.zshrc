@@ -34,8 +34,8 @@ alias olc="oml claude"
 alias olx="oml codex"
 alias olm="ls ~/.omlx/models"  # models on disk
 
-# MCP servers for Claude Code and Codex by scope, across all projects
-alias mcps="~/Workspace/dotfiles/claude/mcps"
+# mcps (brew): also list MCP servers in repos no agent has opened yet
+export MCPS_SCAN="$HOME/Workspace"
 
 # Runtime versions (mise)
 eval "$(mise activate zsh)"

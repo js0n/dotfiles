@@ -6,6 +6,7 @@
 
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
 tap "jundot/omlx", "https://github.com/jundot/omlx"
+tap "js0n/tap"
 tap "nikitabobko/tap"
 
 # Shell and editor
@@ -20,6 +21,9 @@ brew "gh"
 brew "gitleaks"
 brew "mise"
 brew "uv"
+
+# Agent tooling
+brew "js0n/tap/mcps"
 
 # Disk and system monitoring
 brew "dua-cli"
