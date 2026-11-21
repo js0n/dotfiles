@@ -4,6 +4,9 @@ eval "$(starship init zsh)"
 # Editor
 alias vim="nvim"
 
+# Screen
+alias cls="clear"
+
 # Listing (eza)
 alias l="eza --group-directories-first --icons=auto"
 alias ll="eza -la --git --group-directories-first --icons=auto"
