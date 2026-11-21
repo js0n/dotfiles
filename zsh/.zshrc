@@ -21,7 +21,6 @@ alias dux="gdu-go"  # cleanup; D moves to Trash
 typeset -A OML_MODELS=(
   claude   Qwen3.8-Flash-Next-oQ6e-mtp
   codex    Qwen3.8-Flash-Next-oQ6e-mtp
-  opencode Qwen3.8-Flash-Next-oQ6e-mtp
 )
 oml() {
   local tool=$1; shift
